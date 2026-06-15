@@ -7,7 +7,7 @@ venv/
 .env/
 
 # Uploaded PDFs
-cvs/
+uploaded_cvs/
 
 # IDE files
 .idea/

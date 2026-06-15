@@ -5,7 +5,8 @@ langchain
 langchain-anthropic
 sqlitedict
 python-multipart
-
+google-generativeai
+python-dotenv
 
 
 
