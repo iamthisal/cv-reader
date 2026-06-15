@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+pdfplumber
+langchain
+langchain-anthropic
+sqlitedict
+python-multipart
+
+
+
+
+
