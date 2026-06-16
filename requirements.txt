@@ -7,7 +7,7 @@ sqlitedict
 python-multipart
 google-generativeai
 python-dotenv
-
+google-genai
 
 
 
