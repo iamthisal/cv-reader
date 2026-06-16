@@ -4,10 +4,13 @@ import os
 
 from extractor import extract_text
 from parser import parse_cv
+from database import init_db, save_candidate, get_all_candidates
 
 
 
 app = FastAPI()
+init_db()
+
 
 UPLOAD_DIREC = "uploaded_cvs"
 os.makedirs(UPLOAD_DIREC, exist_ok=True)
@@ -24,6 +27,7 @@ async def upload_cv(file : UploadFile = File(...)):
     raw_text = extract_text(file_path)
 
     json_output = parse_cv(raw_text)
+    save_candidate(json_output)
 
     return {
         "message" : "file uploaded successfully",
@@ -31,3 +35,9 @@ async def upload_cv(file : UploadFile = File(...)):
         "raw data" : raw_text,
         "json data" : json_output
     }
+
+@app.get("/candidates")
+def list_candidate():
+    return {"candidates" : get_all_candidates()}
+
+
