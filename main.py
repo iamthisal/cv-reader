@@ -5,11 +5,19 @@ import os
 from extractor import extract_text
 from parser import parse_cv
 from database import init_db, save_candidate, get_all_candidates
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 
 
 app = FastAPI()
 init_db()
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+@app.get("/")
+def serve_frontend():
+    return FileResponse ("static/index.html")
 
 
 UPLOAD_DIREC = "uploaded_cvs"
