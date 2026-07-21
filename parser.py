@@ -1,38 +1,33 @@
 import os
 import json
-import google.generativeai as genai
+from langchain_groq import ChatGroq
 from dotenv import load_dotenv
+
+
+from models import CVData
 
 load_dotenv()
 
-API_KEY = os.getenv("API_KEY")
 
-genai.configure(api_key=API_KEY)
+llm = ChatGroq(model="llama-3.3-70b-versatile")
 
-model = genai.GenerativeModel("gemini-3.5-flash")
+structured_llm = llm.with_structured_output(CVData)
 
 def parse_cv(text: str):
-
     prompt = f"""
-    You are an expert in cv reading and extract the text data to structured json 
-    Your task is to read the text file of cv and MaKE A JSON STRCTURE WITH:
-    
-    -name
-    -email
-    -skills(list)
-    -experience(list , role, company, years)
-    -education
-    
-    Rules
-    -ONLY RETURN VALID JSON NOTHING ELSE
-    -No explnations 
-    -No markdown
-    
-    CV TEXT:
-    {text}
-     """
+You are an expert CV parser.
 
-    response = model.generate_content(prompt)
-    content = response.text
+Extract all available information from the CV.
+If a field is missing, leave it empty or null where appropriate.
 
-    return json.loads(content)
+CV:
+{text}
+"""
+
+    try:
+      return structured_llm.invoke(prompt)
+    except Exception as e:
+        raise ValueError(f"Falied to parse CV: {e}")
+
+
+

@@ -8,6 +8,6 @@ python-multipart
 google-generativeai
 python-dotenv
 google-genai
-
-
-
+langchain_google_genai
+groq>=0.31.0
+langchain_groq
