@@ -25,7 +25,7 @@ def init_db():
     conn.commit()
     conn.close()
 
-def save_candidate(data: dict):
+def save_candidate(data):
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
     cursor.execute("""
@@ -38,7 +38,7 @@ def save_candidate(data: dict):
         data.get("email"),
         json.dumps(data.get("skills", [])),
         json.dumps(data.get("experience",[])),
-        data.get("education")
+        json.dumps(data.get("education",[]))
     ))
     conn.commit()
     conn.close()

@@ -35,13 +35,13 @@ async def upload_cv(file : UploadFile = File(...)):
     raw_text = extract_text(file_path)
 
     json_output = parse_cv(raw_text)
-    save_candidate(json_output)
+    save_candidate(json_output.model_dump())
 
     return {
         "message" : "file uploaded successfully",
         "file_path" : file_path,
         "raw data" : raw_text,
-        "json data" : json_output
+        "json data" : json_output.model_dump()
     }
 
 @app.get("/candidates")
